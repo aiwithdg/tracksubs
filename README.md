@@ -19,12 +19,22 @@ across weekly, monthly, quarterly, yearly, and custom billing cycles.
 - Row-level security — every user only ever sees their own data
 - Light/dark theme, no flash on load
 
+## Supabase project
+
+A project (`tracksubs`, org `aiwithdg`, region `ap-south-1`) is already
+provisioned with `supabase/schema.sql` applied — the `subscriptions` table,
+its indexes, and its row-level security policies are live. Security advisors
+report no issues. Ask for the project's URL/anon key if you need to point a
+new environment at it, or provision your own (steps below) to keep it fully
+separate.
+
 ## Local setup
 
-1. **Create a Supabase project** at [supabase.com](https://supabase.com).
+1. **Create a Supabase project** at [supabase.com](https://supabase.com) (or use the existing `tracksubs` project above).
 2. **Run the schema** — open the SQL editor in your Supabase project and run
    the contents of [`supabase/schema.sql`](./supabase/schema.sql). This creates
-   the `subscriptions` table and its row-level security policies.
+   the `subscriptions` table and its row-level security policies. (Already
+   applied on the `tracksubs` project.)
 3. **Copy environment variables**:
    ```bash
    cp .env.example .env.local
