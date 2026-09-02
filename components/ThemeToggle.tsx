@@ -7,6 +7,10 @@ export default function ThemeToggle() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
+    // One-time read of the class public/theme-boot.js already set on <html>
+    // before hydration (to avoid a flash of the wrong theme) — there's no
+    // external store to subscribe to, just a value to sync once on mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDark(document.documentElement.classList.contains("dark"));
   }, []);
 

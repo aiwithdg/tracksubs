@@ -7,7 +7,7 @@ import type { SubscriptionInput } from "@/lib/types";
 import { advanceRenewalDate } from "@/lib/utils";
 
 export async function addSubscription(input: SubscriptionInput) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -22,7 +22,7 @@ export async function addSubscription(input: SubscriptionInput) {
 }
 
 export async function updateSubscription(id: string, input: SubscriptionInput) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase.from("subscriptions").update(input).eq("id", id);
   if (error) throw new Error(error.message);
 
@@ -30,7 +30,7 @@ export async function updateSubscription(id: string, input: SubscriptionInput) {
 }
 
 export async function deleteSubscription(id: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase.from("subscriptions").delete().eq("id", id);
   if (error) throw new Error(error.message);
 
@@ -38,7 +38,7 @@ export async function deleteSubscription(id: string) {
 }
 
 export async function toggleActive(id: string, isActive: boolean) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase
     .from("subscriptions")
     .update({ is_active: isActive })
@@ -55,7 +55,7 @@ export async function renewSubscription(
   billing_cycle: SubscriptionInput["billing_cycle"],
   custom_interval_days: number | null,
 ) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const newDate = advanceRenewalDate(next_renewal_date, { billing_cycle, custom_interval_days });
   const { error } = await supabase
     .from("subscriptions")
@@ -67,7 +67,7 @@ export async function renewSubscription(
 }
 
 export async function signOut() {
-  const supabase = createClient();
+  const supabase = await createClient();
   await supabase.auth.signOut();
   redirect("/login");
 }

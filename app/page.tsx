@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Layers, CalendarClock, PiggyBank, ShieldCheck } from "lucide-react";
 
 export default async function Home() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

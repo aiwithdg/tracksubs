@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Layers, Loader2 } from "lucide-react";
 
 type Mode = "sign_in" | "sign_up";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [mode, setMode] = useState<Mode>("sign_in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +26,10 @@ export default function LoginPage() {
     if (mode === "sign_in") {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) setError(error.message);
-      else window.location.href = "/dashboard";
+      else {
+        router.push("/dashboard");
+        router.refresh();
+      }
     } else {
       const { error } = await supabase.auth.signUp({
         email,
